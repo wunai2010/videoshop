@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wunai.mybatis.ProductMapper">
+	<resultMap type="com.wunai.bo.Product" id="productMappingMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="remark" column="remark" />
+		<result property="price" column="price" />
+		<result property="amount" column="amount" />
+		<result property="mainPic" column="main_pic" />
+		<result property="extraPic1" column="extra_pic1" />
+		<result property="extraPic2" column="extra_pic2" />
+		<result property="type" column="type"/>
+	</resultMap>
+	<sql id="baseSelectColumn">
+        id,name,remark,price,amount,main_pic,extra_pic1,extra_pic2,type
+	</sql>
+    <select id="query" resultMap="productMappingMap">
+        SELECT 
+        <include refid="baseSelectColumn"/>
+        FROM VS_PRODUCT
+            where IS_DELETED = 'N'
+         <if test="name != null and name !=''">
+			 and name like concat('%',#{name},'%')
+		 </if>
+		 <if test="remark != null and remark !=''">
+			 and remark like concat('%',#{remark},'%')
+		 </if>
+		 <if test="type != null and type !=''">
+			 and type = #{type}
+		 </if>
+    </select>
+    <select id="find" resultMap="productMappingMap">
+        SELECT 
+        <include refid="baseSelectColumn"/>
+        FROM VS_PRODUCT
+            where IS_DELETED = 'N' and id =${value}
+    </select>
+    <insert id="insert">
+        INSERT VS_PRODUCT
+        	(name,remark,price,amount,main_pic,extra_pic1,extra_pic2,type,is_deleted,gmt_created,gmt_modified)
+		VALUES(#{name},#{remark},#{price},#{amount},#{mainPic},#{extraPic1},#{extraPic2},#{type},'N',now(),now())
+    </insert>
+    <update id="update">
+        update  vs_product
+            set name = #{name},
+                remark=#{remark},
+                price=#{price},
+                amount = #{amount},
+                main_pic = #{mainPic},
+                extra_pic1 = #{extraPic1},
+                extra_pic2 = #{extraPic2},
+                type=#{type},
+                gmt_modified = now()
+                where id = ${id}
+    </update>
+    <update id="delete">
+        update  vs_product
+            set is_deleted = 'Y',
+                gmt_modified = now()
+        where id = ${id}
+    </update>
+</mapper>
