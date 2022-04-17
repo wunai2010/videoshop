@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class TbPanel implements Serializable {
+public class Panel implements Serializable {
     private long id;
     private String name;
     private Integer type;

@@ -1,4 +1,4 @@
-package com.wunai.portal.controller;
+package com.wunai.front.controller;
 
 import com.wunai.bo.Product;
 import com.wunai.result.Result;

@@ -6,7 +6,9 @@ import lombok.Data;
 public class Result<T> {
     private String code;
     private String message;
+    private boolean success;
     private T result;
+    private long timestamp = System.currentTimeMillis();
 
     public Result() {
     }
@@ -34,6 +36,7 @@ public class Result<T> {
     }
 
     public Result(T result) {
+        this.success = Boolean.TRUE;
         this.result = result;
         this.code = ErrorCode.EC200.getCode();
     }

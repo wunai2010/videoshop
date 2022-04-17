@@ -5,5 +5,5 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class TbPanelContent implements Serializable{
+public class PanelContent implements Serializable{
 }

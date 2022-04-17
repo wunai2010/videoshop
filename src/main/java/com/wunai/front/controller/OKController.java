@@ -1,4 +1,4 @@
-package com.wunai.portal.controller;
+package com.wunai.front.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
