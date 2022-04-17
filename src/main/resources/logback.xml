@@ -1,0 +1,58 @@
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d [%thread] %-5p [%c] [%F:%L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/alidata1/admin/sso-adapter/logs/monitor_${HOSTNAME}_sso-adapter.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/alidata1/admin/sso-adapter/logs/monitor_${HOSTNAME}_sso-adapter-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder charset="GBK">
+            <pattern>%d [%thread] %-5p [%c] [%F:%L] - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="errorRollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/alidata1/admin/sso-adapter/logs/monitor_${HOSTNAME}_sso-adapter_error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/alidata1/admin/sso-adaptor/logs/monitor_${HOSTNAME}_sso-adaptor_error-%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder charset="GBK">
+			<pattern>%d [%thread] %-5p [%c] [%F:%L] - %msg%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+    
+    <appender name="RollingFileASYNC" class="ch.qos.logback.classic.AsyncAppender">
+			<discardingThreshold>0</discardingThreshold>
+			<queueSize>2048</queueSize>
+			<appender-ref ref="RollingFile" />
+	</appender>
+	
+	<appender name="ERRORRollingFileASYNC" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>2048</queueSize>
+		<appender-ref ref="errorRollingFile" />
+	</appender>
+	
+    <root level="info">
+    	 <appender-ref ref="STDOUT" /> 
+    	 <!-- 
+        <appender-ref ref="RollingFileASYNC" />
+   		<appender-ref ref="ERRORRollingFileASYNC" />
+    	 -->
+    </root>
+    
+</configuration>
